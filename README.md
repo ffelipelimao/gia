@@ -1,6 +1,6 @@
 <p align="center">
     <h1>gia</h1>
-  <img src="image/logo.png" alt="gia logo" width="180" />
+  <img src="image/logo.png" alt="gia logo" width="300" />
 </p>
 
 A commit message generator using the Gemini API
