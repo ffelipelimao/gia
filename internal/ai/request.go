@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-
-	"github.com/joho/godotenv"
 )
 
 const URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
@@ -20,10 +18,6 @@ type AI struct {
 }
 
 func NewIA(httpClient *http.Client) (*AI, error) {
-	err := godotenv.Load()
-	if err != nil {
-		return nil, errors.New("[VendorIA] - Error to create env")
-	}
 	apiKey := os.Getenv("GEMINI_API_KEY")
 	if apiKey == "" {
 		return nil, errors.New("[VendorIA] - Missing API KEY")
@@ -36,9 +30,9 @@ func NewIA(httpClient *http.Client) (*AI, error) {
 }
 
 func (ai *AI) Execute(diff string) (string, error) {
-	content, err := os.ReadFile("./internal/ai/prompt")
-	if err != nil {
-		return "", fmt.Errorf("[VendorIA] failed to read .prompt file: %w", err)
+	content := os.Getenv("GEMINI_PROMPT")
+	if content == "" {
+		return "", errors.New("[VendorIA] failed to read GEMINI_PROMPT env with prompt")
 	}
 
 	reqBody := Request{

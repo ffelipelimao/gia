@@ -11,9 +11,10 @@ A commit message generator using the Gemini API
 - A Google AI Studio API key (`GEMINI_API_KEY`)
 
 ### Setup
-1. Create a `.env` file at the project root with:
+1. Create a env at your .bashrc or .zshrc with your API key and your prompt
 ```bash
-GEMINI_API_KEY=your_api_key_here
+export GEMINI_API_KEY="your_api_key_here"
+export GEMINI_PROMPT="your_prompt_to_create_commit"
 ```
 
 ### Usage
