@@ -35,6 +35,10 @@
 ```bash
 go install github.com/ffelipelimao/gia@latest
 ```
+Added your GOBIN into PATH
+```bash
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
 
 #### From Binary (Coming Soon)
 Download the latest release for your platform from the [releases page](https://github.com/ffelipelimao/gia/releases).
