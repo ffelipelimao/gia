@@ -9,3 +9,7 @@ install: build
 
 uninstall:
 	sudo rm /usr/local/bin/gia
+
+test:
+	go test ./... -coverprofile=coverage.out
+	go tool cover -html=coverage.out
