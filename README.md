@@ -3,7 +3,7 @@
   <img src="image/logo.png" alt="gia logo" width="300" />
 </p>
 
-A commit message generator using the Gemini API
+A CLI tool for AI-driven task execution using the Gemini API
 
 ### Requirements
 - Go 1.21+
@@ -17,21 +17,59 @@ export GEMINI_API_KEY="your_api_key_here"
 export GEMINI_PROMPT="your_prompt_to_create_commit"
 ```
 
-### Usage
+### Installation
 Install the binary globally (recommended):
 ```bash
 go install github.com/ffelipelimao/gia@latest
 ```
 
-Then, inside a Git repository with local changes, run:
+### Usage
+
+#### Commit Command
+Generate and execute a git commit with AI assistance:
+
 ```bash
-gia
+# Using the full command name
+gia commit
+
+# Using the alias
+gia c
 ```
 
-The command reads the repository's current `git diff` and prints a suggested commit message to stdout.
+The command provides an interactive interface that:
+1. Reads the repository's current `git diff`
+2. Generates a commit message using AI
+3. Presents you with options:
+   - **`a`** - Accept and commit (executes the commit with the generated message)
+   - **`r`** - Regenerate message (generates a new message using AI)
+   - **`e`** - Edit manually (allows you to enter your own commit message)
+   - **`q`** - Quit (exits without committing)
+
+#### Example Interaction
+```
+📝 Generated commit message:
+feat: add interactive commit message generation
+
+Options:
+  [a] Accept and commit
+  [r] Regenerate message
+  [e] Edit manually
+  [q] Quit
+
+Choose an option: a
+✅ Commit executed successfully!
+```
+
+#### Help
+Get help for any command:
+```bash
+gia --help
+gia commit --help
+gia c --help
+```
 
 ### Project structure
-- `gia.go`: CLI entry point
+- `gia.go`: CLI entry point with Cobra commands
 - `internal/ai`: Google AI (Gemini) API integration
 - `internal/exec`: Git command execution (diff collection and commit helper)
 - `Makefile`: convenience target for `go run`
