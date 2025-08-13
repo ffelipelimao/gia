@@ -1,63 +1,223 @@
-<p align="center">
-    <h1>gia</h1>
-  <img src="image/logo.png" alt="gia logo" width="300" />
-</p>
+# Gia 🤖
 
-A commit message generator using the Gemini API
+<div align="center">
 
-### Requirements
-- Go 1.21+
+![Gia Logo](image/logo.png)
+
+**AI-powered Git commit assistant using Google's Gemini API**
+
+[![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ffelipelimao/gia)](https://goreportcard.com/report/github.com/ffelipelimao/gia)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ffelipelimao/gia.svg)](https://pkg.go.dev/github.com/ffelipelimao/gia)
+
+</div>
+
+## ✨ Features
+
+- 🤖 **AI-Powered Commit Messages**: Generate meaningful commit messages using Google's Gemini API
+- 🔄 **Interactive Interface**: Choose to accept, regenerate, or edit generated messages
+- ⚡ **Fast & Lightweight**: Built in Go for optimal performance
+- 🎯 **Smart Diff Analysis**: Automatically analyzes your `git diff` for context
+- 🛠️ **Easy Integration**: Simple CLI tool that works with any Git workflow
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Go 1.21 or higher
 - Git
-- A Google AI Studio API key (`GEMINI_API_KEY`)
+- Google AI Studio API key
 
-### Setup
-1. Create a env at your .bashrc or .zshrc with your API key and your prompt
-```bash
-export GEMINI_API_KEY="your_api_key_here"
-export GEMINI_PROMPT="your_prompt_to_create_commit"
-```
+### Installation
 
-### Usage
-Install the binary globally (recommended):
+#### From Source
 ```bash
 go install github.com/ffelipelimao/gia@latest
 ```
 
-Then, inside a Git repository with local changes, run:
+#### From Binary (Coming Soon)
+Download the latest release for your platform from the [releases page](https://github.com/ffelipelimao/gia/releases).
+
+### Configuration
+
+Set up your environment variables:
+
 ```bash
-gia
+# Add to your ~/.bashrc, ~/.zshrc, or ~/.profile
+export GEMINI_API_KEY="your_api_key_here"
+export GEMINI_PROMPT="your_custom_prompt_for_commit_generation"
 ```
 
-The command reads the repository's current `git diff` and prints a suggested commit message to stdout.
+**Get your API key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey) to create your Gemini API key.
 
-### Project structure
-- `gia.go`: CLI entry point
-- `internal/ai`: Google AI (Gemini) API integration
-- `internal/exec`: Git command execution (diff collection and commit helper)
-- `Makefile`: convenience target for `go run`
+## 📖 Usage
 
-### Contributing
-We welcome contributions! Steps:
-1. (Optional) Open an issue describing the improvement or bug
-2. Fork the repository
-3. Create a branch from `main`:
+### Generate AI Commit Messages
+
 ```bash
-git checkout -b feat/my-improvement
+# Using the full command
+gia commit
+
+# Using the shorthand alias
+gia c
 ```
-4. Make your changes
-5. Ensure formatting and basic checks pass:
-6. Update documentation if needed
-7. Open a Pull Request explaining what and why
 
-Additional guidelines:
-- Keep commits using gia
-- Prefer descriptive names for variables and functions
-- Provide helpful error messages (the project follows this pattern)
+### Interactive Workflow
 
-### Credentials notes
-- Do be stupid and not commit or expose secrets
-- Use `.env` locally
+1. **Stage your changes**: `git add .`
+2. **Run Gia**: `gia commit`
+3. **Choose your option**:
+   - `a` - Accept and commit
+   - `r` - Regenerate message
+   - `q` - Quit without committing
 
-### License
-This project is distributed under the MIT License. See `LICENSE` for details.
+### Example Session
 
+```bash
+$ gia commit
+
+📝 Generated commit message:
+feat: add user authentication system with JWT tokens
+
+Options:
+  [a] Accept and commit
+  [r] Regenerate message
+  [q] Quit
+
+Choose an option: a
+✅ Commit executed successfully!
+```
+
+### Help
+
+```bash
+# General help
+gia --help
+
+# Command-specific help
+gia commit --help
+gia c --help
+```
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Go 1.21+
+- Git
+
+### Local Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ffelipelimao/gia.git
+   cd gia
+   ```
+
+2. **Install dependencies**
+   ```bash
+   go mod download
+   ```
+
+3. **Build the project**
+   ```bash
+   go build -o gia .
+   ```
+
+4. **Run tests**
+   ```bash
+   go test ./...
+   ```
+
+### Project Structure
+
+```
+gia/
+├── gia.go              # Main application entry point
+├── go.mod              # Go module definition
+├── internal/
+│   ├── ai/             # AI client and request handling
+│   ├── commands/       # CLI command implementations
+│   └── exec/           # Execution utilities
+└── image/              # Project assets
+```
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+### Before You Start
+
+1. Check existing [issues](https://github.com/ffelipelimao/gia/issues) to see if your idea has already been discussed
+2. For new features, please open an issue first to discuss the implementation
+
+### Development Workflow
+
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feat/your-feature-name
+   ```
+3. **Make your changes**
+4. **Run tests and checks**
+   ```bash
+   go test ./...
+   go fmt ./...
+   go vet ./...
+   ```
+5. **Commit your changes** (using Gia, of course!)
+   ```bash
+   gia commit
+   ```
+6. **Push and create a Pull Request**
+
+### Code Style Guidelines
+
+- Follow Go conventions and use `gofmt`
+- Write meaningful commit messages
+- Add tests for new functionality
+- Update documentation when needed
+- Keep functions and variables descriptive
+
+### Commit Message Convention
+
+We use conventional commits. When contributing, please use Gia to generate commit messages, which will follow this format:
+
+- `feat:` for new features
+- `fix:` for bug fixes
+- `docs:` for documentation changes
+- `style:` for formatting changes
+- `refactor:` for code refactoring
+- `test:` for adding tests
+- `chore:` for maintenance tasks
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔒 Security
+
+**Important**: Never commit API keys or sensitive credentials to version control. Always use environment variables for configuration.
+
+## 🙏 Acknowledgments
+
+- [Cobra](https://github.com/spf13/cobra) for the excellent CLI framework
+- [Google Gemini API](https://ai.google.dev/) for AI capabilities
+- All contributors who help improve this project
+
+## 📞 Support
+
+- 🐛 **Bug Reports**: [Create an issue](https://github.com/ffelipelimao/gia/issues)
+- 💡 **Feature Requests**: [Create an issue](https://github.com/ffelipelimao/gia/issues)
+- 📖 **Documentation**: Check this README and inline code comments
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/ffelipelimao/gia/discussions)
+
+---
+
+<div align="center">
+
+
+[⭐ Star this repo](https://github.com/ffelipelimao/gia) if you found it helpful!
+
+</div>

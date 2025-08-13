@@ -2,28 +2,23 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
-	"time"
+	"os"
 
-	"github.com/ffelipelimao/gia/internal/ai"
-	"github.com/ffelipelimao/gia/internal/exec"
+	"github.com/ffelipelimao/gia/internal/commands"
+	"github.com/spf13/cobra"
 )
 
 func main() {
-	httpClient := &http.Client{
-		Timeout: 15 * time.Second,
-	}
-	ai, err := ai.NewIA(httpClient)
-	if err != nil {
-		log.Fatal(err)
+	rootCmd := &cobra.Command{
+		Use:   "gia",
+		Short: "Gia - A CLI tool for AI-driven task execution",
+		Long:  `Gia is a CLI tool that uses AI to help with git commits `,
 	}
 
-	executor := exec.NewExecutor(ai)
+	rootCmd.AddCommand(commands.NewCommitCommand())
 
-	msg, err := executor.Start()
-	if err != nil {
-		log.Fatal(err)
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
-	fmt.Println(msg)
 }
