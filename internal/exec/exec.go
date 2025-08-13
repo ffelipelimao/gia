@@ -53,7 +53,7 @@ func (e *Executor) Commit(msg string) error {
 }
 
 func (e *Executor) getGitDiff() (string, error) {
-	cmd := exec.Command("git", "diff")
+	cmd := exec.Command("git", "diff", "--cached")
 
 	var out bytes.Buffer
 

@@ -81,7 +81,7 @@ func main() {
 						log.Fatal("Failed to read custom message:", err)
 					}
 					customMsg = strings.TrimSpace(customMsg)
-
+					
 					if customMsg == "" {
 						fmt.Println("❌ Message cannot be empty. Please try again.")
 						continue
