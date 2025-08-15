@@ -4,10 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/ffelipelimao/gia/internal/ai"
 	"github.com/ffelipelimao/gia/internal/exec"
@@ -21,16 +19,14 @@ func NewCommitCommand() *cobra.Command {
 		Aliases: []string{"c"},
 		Short:   "Generate and execute a git commit with AI",
 		Long:    `Generate a commit message using AI based on git diff and execute the commit.`,
+		Args:    cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			httpClient := &http.Client{
-				Timeout: 15 * time.Second,
-			}
-			ai, err := ai.NewIA(httpClient)
+			strategy := ai.NewDefaultFactory()
+			aiClient, err := strategy.Create(cmd.Context(), args[0])
 			if err != nil {
-				log.Fatal(err)
+				log.Fatalf("Failed to create AI client: %v", err)
 			}
-
-			executor := exec.NewExecutor(ai)
+			executor := exec.NewExecutor(aiClient)
 
 			for {
 				msg, err := executor.Start()
