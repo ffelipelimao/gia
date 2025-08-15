@@ -4,7 +4,7 @@
 
 ![Gia Logo](image/logo.png)
 
-**AI-powered Git commit assistant using Google's Gemini API**
+**AI-powered Git commit assistant**
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -15,7 +15,7 @@
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Commit Messages**: Generate meaningful commit messages using Google's Gemini API
+- 🤖 **AI-Powered Commit Messages**: Generate meaningful commit messages
 - 🔄 **Interactive Interface**: Choose to accept, regenerate, or edit generated messages
 - ⚡ **Fast & Lightweight**: Built in Go for optimal performance
 - 🎯 **Smart Diff Analysis**: Automatically analyzes your `git diff` for context
@@ -47,30 +47,39 @@ Download the latest release for your platform from the [releases page](https://g
 
 Set up your environment variables:
 
+#### Google Studio API to gemini
+
 ```bash
 # Add to your ~/.bashrc, ~/.zshrc, or ~/.profile
 export GEMINI_API_KEY="your_api_key_here"
 export GEMINI_PROMPT="your_custom_prompt_for_commit_generation"
 ```
-
 **Get your API key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey) to create your Gemini API key.
+
+#### AWS Credentials to Bedrock
+```bash
+aws configure
+```
 
 ## 📖 Usage
 
 ### Generate AI Commit Messages
 
 ```bash
-# Using the full command
-gia commit
+# Using the full command to use gemini
+gia commit gemini
+
+# Using the full command to use bedrock
+gia commit bedrock
 
 # Using the shorthand alias
-gia c
+gia c gemini
 ```
 
 ### Interactive Workflow
 
 1. **Stage your changes**: `git add .`
-2. **Run Gia**: `gia commit`
+2. **Run Gia**: `gia commit <provider>`
 3. **Choose your option**:
    - `a` - Accept and commit
    - `r` - Regenerate message
@@ -79,7 +88,7 @@ gia c
 ### Example Session
 
 ```bash
-$ gia commit
+$ gia commit gemini
 
 📝 Generated commit message:
 feat: add user authentication system with JWT tokens
@@ -126,12 +135,12 @@ gia c --help
 
 3. **Build the project**
    ```bash
-   go build -o gia .
+   make build
    ```
 
 4. **Run tests**
    ```bash
-   go test ./...
+   make test
    ```
 
 ### Project Structure
