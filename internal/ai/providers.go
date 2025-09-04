@@ -16,5 +16,8 @@ func NewDefaultFactory() *Factory {
 	f.Register("bedrock", func(ctx context.Context) (Strategy, error) {
 		return bedrock.NewBedrockClient(ctx)
 	})
+	f.Register("default", func(ctx context.Context) (Strategy, error) {
+		return gemini.NewGeminiClient(ctx)
+	})
 	return f
 }
