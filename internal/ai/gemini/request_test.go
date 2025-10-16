@@ -36,7 +36,7 @@ func TestAI_Execute(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			_, err := ai.Execute(tt.diff)
+			_, err := ai.Execute(tt.diff, "commit")
 
 			if tt.expectError {
 				assert.Error(t, err)

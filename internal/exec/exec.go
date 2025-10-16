@@ -10,7 +10,7 @@ import (
 var ErrEmptyGitDiff = errors.New("[Executor] - Empty git diff")
 
 type AI interface {
-	Execute(diff string) (string, error)
+	Execute(diff, operation string) (string, error)
 }
 
 type Executor struct {
@@ -23,7 +23,7 @@ func NewExecutor(ai AI) *Executor {
 	}
 }
 
-func (e *Executor) Start() (string, error) {
+func (e *Executor) StartCommit() (string, error) {
 	gitDiff, err := e.getGitDiff()
 	if err != nil {
 		return "", err
@@ -33,7 +33,7 @@ func (e *Executor) Start() (string, error) {
 		return "", ErrEmptyGitDiff
 	}
 
-	msg, err := e.ai.Execute(gitDiff)
+	msg, err := e.ai.Execute(gitDiff, "commit")
 	if err != nil {
 		return "", err
 	}
@@ -43,6 +43,35 @@ func (e *Executor) Start() (string, error) {
 
 func (e *Executor) Commit(msg string) error {
 	cmd := exec.Command("git", "commit", "-m", msg)
+	var out bytes.Buffer
+
+	cmd.Stdout = &out
+
+	err := cmd.Run()
+
+	return err
+}
+
+func (e *Executor) StartBranch() (string, error) {
+	gitDiff, err := e.getGitDiff()
+	if err != nil {
+		return "", err
+	}
+
+	if strings.TrimSpace(gitDiff) == "" {
+		return "", ErrEmptyGitDiff
+	}
+
+	msg, err := e.ai.Execute(gitDiff, "branch")
+	if err != nil {
+		return "", err
+	}
+
+	return msg, nil
+}
+
+func (e *Executor) Branch(msg string) error {
+	cmd := exec.Command("git", "checkout", "-b", msg)
 	var out bytes.Buffer
 
 	cmd.Stdout = &out

@@ -7,11 +7,11 @@ import (
 )
 
 type mockAI struct {
-	executeFunc func(diff string) (string, error)
+	executeFunc func(diff, operation string) (string, error)
 }
 
-func (m *mockAI) Execute(diff string) (string, error) {
-	return m.executeFunc(diff)
+func (m *mockAI) Execute(diff, operation string) (string, error) {
+	return m.executeFunc(diff, operation)
 }
 
 func TestExecutor_Start(t *testing.T) {
@@ -34,14 +34,14 @@ func TestExecutor_Start(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			mockAI := &mockAI{
-				executeFunc: func(diff string) (string, error) {
+				executeFunc: func(diff, operation string) (string, error) {
 					return tt.aiResponse, tt.aiError
 				},
 			}
 
 			executor := NewExecutor(mockAI)
 
-			result, err := executor.Start()
+			result, err := executor.StartCommit()
 
 			if tt.expectError {
 				assert.Error(t, err)

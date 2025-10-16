@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Gia Logo](image/logo.png)
+![Gia Logo](docs/image/logo.png)
 
 **AI-powered Git commit assistant**
 
@@ -153,7 +153,7 @@ gia/
 │   ├── ai/             # AI client and request handling
 │   ├── commands/       # CLI command implementations
 │   └── exec/           # Execution utilities
-└── image/              # Project assets
+└── /docs/              # Project docs
 ```
 
 ## 🤝 Contributing
