@@ -6,7 +6,7 @@ import (
 )
 
 type Strategy interface {
-	Execute(diff string) (string, error)
+	Execute(diff, operation string) (string, error)
 }
 
 type StrategyConstructor func(ctx context.Context) (Strategy, error)

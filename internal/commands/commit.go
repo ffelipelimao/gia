@@ -33,13 +33,18 @@ func commitRunner(cmd *cobra.Command, args []string) {
 	}
 	executor := exec.NewExecutor(aiClient)
 
+	shouldGenerate := true
+	var message string
+
 	for {
-		msg, err := executor.Start()
-		if err != nil {
-			log.Fatal(err)
+		if shouldGenerate {
+			message, err = executor.StartCommit()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
-		fmt.Printf("📝 Generated commit message:\n%s\n\n", msg)
+		fmt.Printf("📝 Generated commit message:\n%s\n\n", message)
 		fmt.Print("Options:\n")
 		fmt.Print("  [a] Accept and commit\n")
 		fmt.Print("  [r] Regenerate message\n")
@@ -56,7 +61,7 @@ func commitRunner(cmd *cobra.Command, args []string) {
 
 		switch choice {
 		case "a", "accept":
-			err = executor.Commit(msg)
+			err = executor.Commit(message)
 			if err != nil {
 				log.Fatal("Failed to commit:", err)
 			}
@@ -73,13 +78,7 @@ func commitRunner(cmd *cobra.Command, args []string) {
 
 		default:
 			fmt.Println("❌ Invalid option. Please choose 'a', 'r' or 'q'.")
+			shouldGenerate = false
 		}
 	}
-}
-
-func getProvider(args []string) string {
-	if len(args) > 0 {
-		return args[0]
-	}
-	return "default"
 }

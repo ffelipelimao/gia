@@ -35,12 +35,11 @@ func NewGeminiClient(ctx context.Context) (*GeminiClient, error) {
 	}, nil
 }
 
-func (gc *GeminiClient) Execute(diff string) (string, error) {
-	content := os.Getenv("GEMINI_PROMPT")
-	if content == "" {
-		return "", errors.New("[VendorIA] failed to read GEMINI_PROMPT env with prompt")
+func (gc *GeminiClient) Execute(diff, operation string) (string, error) {
+	content, err := getPrompt(operation)
+	if err != nil {
+		return "", nil
 	}
-
 	reqBody := Request{
 		Contents: []struct {
 			Parts []struct {
@@ -88,4 +87,16 @@ func (gc *GeminiClient) Execute(diff string) (string, error) {
 	}
 
 	return strings.TrimSpace(geminiResp.Candidates[0].Content.Parts[0].Text), nil
+}
+
+func getPrompt(operation string) (string, error) {
+	if operation == "commit" {
+		return os.Getenv("GEMINI_PROMPT"), nil
+	}
+
+	if operation == "branch" {
+		return os.Getenv("GEMINI_BRANCH_PROMPT"), nil
+	}
+
+	return "", errors.New("[VendorIA] failed to read env with prompt")
 }

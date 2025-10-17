@@ -26,7 +26,7 @@ func NewBedrockClient(ctx context.Context) (*BedrockClient, error) {
 	}, nil
 }
 
-func (c *BedrockClient) Execute(diff string) (string, error) {
+func (c *BedrockClient) Execute(diff, operation string) (string, error) {
 	// Placeholder for Bedrock execution logic
 	// This should include the actual call to the Bedrock service
 	// using the AWS SDK for Go v2.
