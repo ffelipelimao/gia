@@ -3,6 +3,8 @@ package exec
 import (
 	"bytes"
 	"errors"
+	"fmt"
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -71,14 +73,24 @@ func (e *Executor) StartBranch() (string, error) {
 }
 
 func (e *Executor) Branch(msg string) error {
+	log.Printf("Tentando criar branch: %s", msg)
+
 	cmd := exec.Command("git", "checkout", "-b", msg)
 	var out bytes.Buffer
+	var stderr bytes.Buffer
 
 	cmd.Stdout = &out
+	cmd.Stderr = &stderr
 
 	err := cmd.Run()
+	if err != nil {
+		log.Printf("Stdout: %s", out.String())
+		log.Printf("Stderr: %s", stderr.String())
+		return fmt.Errorf("erro ao criar branch: %v", err)
+	}
 
-	return err
+	log.Printf("Branch criada com sucesso: %s", msg)
+	return nil
 }
 
 func (e *Executor) getGitDiff() (string, error) {

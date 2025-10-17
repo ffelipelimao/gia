@@ -13,6 +13,7 @@ require (
 require (
 	github.com/aws/aws-sdk-go-v2 v1.38.0 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 )
 
 require (
