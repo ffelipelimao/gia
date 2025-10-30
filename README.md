@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![Gia Logo](docs/image/logo.png)
-
 **AI-powered Git assistant**
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org)
