@@ -17,6 +17,7 @@ func main() {
 
 	rootCmd.AddCommand(commands.NewCommitCommand())
 	rootCmd.AddCommand(commands.NewBranchCommand())
+	rootCmd.AddCommand(commands.NewBranchCommitCommand())
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
