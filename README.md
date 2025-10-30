@@ -4,7 +4,7 @@
 
 ![Gia Logo](docs/image/logo.png)
 
-**AI-powered Git commit assistant**
+**AI-powered Git assistant**
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
